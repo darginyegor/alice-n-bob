@@ -7,7 +7,7 @@ import { MessengerClient } from '../interfaces/messenger-client';
 })
 export class MessagesService {
 
-  private messages: Message[];
+  private messages: Message[] = [];
   private clients: MessengerClient[] = [];
   private clientIdTracker: number = 1;
   private messageIdTracker: number = 1;

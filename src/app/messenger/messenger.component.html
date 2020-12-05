@@ -2,10 +2,14 @@
     <span>{{name}}</span>
 </div>
 <div class="anb-messenger__messages">
-
+    <anb-message 
+        *ngFor="let message of messages"
+        [message]="message"
+        [isOutgoing]="message.senderId === client.id">
+    </anb-message>
 </div>
 <div class="anb-messenger__controls">
-    <input type="text" class="anb-messenger__input">
+    <input [(ngModel)]="messageDraft" type="text" class="anb-messenger__input" (keyup.enter)="send()">
     <button class="anb-messenger__send">
         <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
             <path d="M0 0h24v24H0V0z" fill="none"/>

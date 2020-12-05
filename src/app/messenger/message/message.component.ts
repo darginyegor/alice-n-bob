@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, HostBinding, Input, OnInit } from '@angular/core';
 import { Message } from 'src/app/interfaces/message';
 
 @Component({
@@ -9,6 +9,7 @@ import { Message } from 'src/app/interfaces/message';
 export class MessageComponent implements OnInit {
 
   @Input() message: Message;
+  @HostBinding('class.anb-message--outgoing') @Input() isOutgoing: boolean = false;
 
   constructor() { }
 

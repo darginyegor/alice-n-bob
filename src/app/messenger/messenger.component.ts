@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MessengerClient } from '../interfaces/messenger-client';
 import { Message } from '../interfaces/message';
 import { MessagesService } from '../services/messages.service';
@@ -8,22 +8,36 @@ import { MessagesService } from '../services/messages.service';
   templateUrl: './messenger.component.html',
   styleUrls: ['./messenger.component.scss']
 })
-export class MessengerComponent implements OnInit {
+export class MessengerComponent implements OnInit, OnDestroy {
 
   @Input() name: string;
   client: MessengerClient;
   messages: Message[] = [];
+  messageDraft: string;
 
   constructor(
     private messagesService: MessagesService
   ) { }
 
-  onMessageRecieved(message: Message) {
+  registerMessageHandler() {
+    return (message: Message) => {
+      this.messages.unshift(message);
+    }
+  }
 
+  send() {
+    this.messagesService.push(this.messageDraft, this.client);
+    this.messageDraft = '';
   }
 
   ngOnInit(): void {
-    this.client = this.messagesService.registerClient(this.name, this.onMessageRecieved);
+    this.client = this.messagesService.registerClient(this.name, this.registerMessageHandler());
+  }
+
+  ngOnDestroy(): void {
+    if (this.client) {
+      this.client.subscription.unsubscribe();
+    }
   }
 
 }

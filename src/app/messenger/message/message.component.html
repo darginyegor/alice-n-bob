@@ -1,1 +1,5 @@
-<p>{{message.body}}</p>
+<p class="anb-message__body">{{message.body}}</p>
+<span class="anb-message__date">
+    {{message.createdAt | date:'hh.mm'}}
+    {{isOutgoing}}
+</span>

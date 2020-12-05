@@ -1,0 +1,25 @@
+@import "../../../styles.variables.scss";
+
+:host {
+    margin: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    .anb-message__body {
+        background-color: #f0f0f0;
+        padding: 8px 12px;
+        border-radius: 12px;
+        margin: 0;
+    }
+    .anb-message__date {
+        font-size: 10px;
+        margin-top: 4px;
+    }
+    &.anb-message--outgoing {
+        align-items: flex-end;
+        .anb-message__body {
+            background-color: $accent;
+            color: white;
+        }
+    }
+}
