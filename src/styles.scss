@@ -1,1 +1,17 @@
-/* You can add global styles to this file, and also import other style files */
+@import "./styles.variables.scss";
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+button {
+    color: $accent;
+    fill: $accent;
+    border: none;
+    background-color: transparent;
+    height: 48px;
+    padding: 12px;
+}

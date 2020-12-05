@@ -1,0 +1,28 @@
+@import "../../styles.variables.scss";
+
+:host {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    flex: auto;
+    max-width: 420px;
+    height: 720px;
+    max-height: 720px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 16px 32px rgba(0, 0, 0, .1);
+    .anb-messenger__header {
+        height: 48px;
+    }
+    .anb-messenger__messages {
+        flex: auto;
+        background-color: $light-accent;
+    }
+    .anb-messenger__controls {
+        display: flex;
+        .anb-messenger__input {
+            flex: auto;
+            border: none;
+        }
+    }
+}
