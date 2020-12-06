@@ -1,6 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Message } from '../interfaces/message';
+import { MessagesEvent } from '../interfaces/messages-event';
 import { MessengerClient } from '../interfaces/messenger-client';
 
 @Injectable({
@@ -12,7 +13,7 @@ export class MessagesService {
   private clients: MessengerClient[] = [];
   private clientIdTracker: number = 1;
   private messageIdTracker: number = 1;
-  private messageEmiiter: Subject<Message> = new Subject();
+  private messageEmiiter: Subject<MessagesEvent> = new Subject();
 
 
   constructor() { }
@@ -25,7 +26,7 @@ export class MessagesService {
     return this.messageIdTracker++;
   }
 
-  public registerClient(name: string, handler: (message) => void): MessengerClient {
+  public registerClient(name: string, handler: (message: MessagesEvent) => any): MessengerClient {
     let subscription = this.messageEmiiter.subscribe(handler);
     let newClient: MessengerClient = {
       id: this.getNewClientId(),
@@ -44,10 +45,45 @@ export class MessagesService {
       id: this.getNewMessageId(),
       senderId: client.id,
       body: messageBody,
-      createdAt: new Date()
+      createdAt: new Date(),
+      deletedFor: []
     }
     this.messages.push(message);
-    this.messageEmiiter.next(message);
+    this.messageEmiiter.next({
+      type: 'new',
+      message
+    });
+  }
+
+  public delete(messageId: number, client: MessengerClient): void {
+    if (!this.clients.includes(client)) {
+      throw new Error('Client not registered.');
+    }
+    let messageIndex = this.messages.findIndex(message => message.id === messageId);
+    if (messageIndex < 0) {
+      throw new Error('Message not found');
+    }
+    this.messages.splice(messageIndex, 1);
+    this.messageEmiiter.next({
+      type: 'delete',
+      messageId
+    });
+  }
+
+  public deleteFor(messageId: number, client: MessengerClient) {
+    if (!this.clients.includes(client)) {
+      throw new Error('Client not registered.');
+    }
+    let message = this.messages.find(message => message.id === messageId);
+    if (!message) {
+      throw new Error('Message not found');
+    }
+    message.deletedFor.push(client.id);
+    this.messageEmiiter.next({
+      type: 'deleteFor',
+      messageId: message.id,
+      clientId: client.id
+    });
   }
 
 }

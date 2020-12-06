@@ -11,7 +11,6 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    
     .anb-message__body {
         background-color: white;
         padding: 8px 12px;
@@ -20,9 +19,25 @@
         transform-origin: bottom left;
         animation: appear .1s;
     }
-    .anb-message__date {
-        font-size: 10px;
+    .anb-message__footer {
+        display: flex;
+        flex-direction: row;
         margin-top: 4px;
+        .anb-message__controls {
+            display: none;
+            .anb-message__control {
+                display: block;
+                padding: 0 12px;
+                height: unset;
+                font-size: 12px;
+                line-height: 1;
+                color: $danger;
+            }
+        }
+        .anb-message__date {
+            font-size: 10px;
+            line-height: 1.2;
+        }
     }
     &.anb-message--outgoing {
         align-items: flex-end;
@@ -30,6 +45,16 @@
             background-color: $accent;
             color: white;
             transform-origin: bottom right;
+        }
+        .anb-message__footer {
+            flex-direction: row-reverse;
+        }
+    }
+    &:hover {
+        .anb-message__footer {
+            .anb-message__controls {
+                display: flex;
+            }
         }
     }
 }

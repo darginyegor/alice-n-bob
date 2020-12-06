@@ -2,11 +2,15 @@
     <span>{{name}}</span>
 </div>
 <div class="anb-messenger__messages">
-    <anb-message 
-        *ngFor="let message of messages"
-        [message]="message"
-        [isOutgoing]="message.senderId === client.id">
-    </anb-message>
+    <ng-container *ngFor="let message of messages">
+        <anb-message 
+            *ngIf="!message.deletedFor.includes(client.id)"
+            [message]="message"
+            [isOutgoing]="message.senderId === client.id"
+            (onDeleteForAll)="deleteMessageForAll($event)"
+            (onDeleteForMe)="deleteMessageForMe($event)">
+        </anb-message>
+    </ng-container>
 </div>
 <div class="anb-messenger__controls">
     <input [(ngModel)]="messageDraft" type="text" class="anb-messenger__input" (keyup.enter)="send()">

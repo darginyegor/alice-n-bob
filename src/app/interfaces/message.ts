@@ -3,4 +3,5 @@ export interface Message {
     senderId: number;
     body: string;
     createdAt: Date;
+    deletedFor: number[];
 }

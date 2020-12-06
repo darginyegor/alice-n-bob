@@ -1,4 +1,15 @@
 <p class="anb-message__body">{{message.body}}</p>
-<span class="anb-message__date">
-    {{message.createdAt | date:'hh.mm'}}
-</span>
+<div class="anb-message__footer">
+    <span class="anb-message__date">
+        {{message.createdAt | date:'hh.mm'}}
+    </span>
+    <div class="anb-message__controls">
+        <button class="anb-message__control" (click)="deleteForMe()">
+            Удалить у меня
+        </button>
+        <button class="anb-message__control" (click)="deleteForAll()">
+            Удалить у всех
+        </button>
+    </div>
+</div>
+
