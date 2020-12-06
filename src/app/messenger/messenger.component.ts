@@ -13,7 +13,7 @@ export class MessengerComponent implements OnInit, OnDestroy {
   @Input() name: string;
   client: MessengerClient;
   messages: Message[] = [];
-  messageDraft: string;
+  messageDraft: string = '';
 
   constructor(
     private messagesService: MessagesService
@@ -26,6 +26,9 @@ export class MessengerComponent implements OnInit, OnDestroy {
   }
 
   send() {
+    if (this.messageDraft == '') {
+      return;
+    }
     this.messagesService.push(this.messageDraft, this.client);
     this.messageDraft = '';
   }

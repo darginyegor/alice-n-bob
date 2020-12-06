@@ -1,4 +1,5 @@
 import { EventEmitter, Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 import { Message } from '../interfaces/message';
 import { MessengerClient } from '../interfaces/messenger-client';
 
@@ -11,7 +12,7 @@ export class MessagesService {
   private clients: MessengerClient[] = [];
   private clientIdTracker: number = 1;
   private messageIdTracker: number = 1;
-  private messageEmiiter: EventEmitter<Message> = new EventEmitter();
+  private messageEmiiter: Subject<Message> = new Subject();
 
 
   constructor() { }
@@ -46,7 +47,7 @@ export class MessagesService {
       createdAt: new Date()
     }
     this.messages.push(message);
-    this.messageEmiiter.emit(message);
+    this.messageEmiiter.next(message);
   }
 
 }

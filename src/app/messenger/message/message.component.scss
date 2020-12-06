@@ -1,15 +1,24 @@
 @import "../../../styles.variables.scss";
 
+@keyframes appear {
+    from {
+        transform: scale(0);
+    }
+}
+
 :host {
     margin: 12px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    
     .anb-message__body {
-        background-color: #f0f0f0;
+        background-color: white;
         padding: 8px 12px;
-        border-radius: 12px;
+        border-radius: 8px;
         margin: 0;
+        transform-origin: bottom left;
+        animation: appear .1s;
     }
     .anb-message__date {
         font-size: 10px;
@@ -20,6 +29,7 @@
         .anb-message__body {
             background-color: $accent;
             color: white;
+            transform-origin: bottom right;
         }
     }
 }
